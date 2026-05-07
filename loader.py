@@ -12,5 +12,16 @@ def FileLoading(filepath):
     return(docs_dict)
 
 
+def chunks(text,chunk_size,overlap):
+    position = 0
+    dict_text = {}
+    while position  <len(text) :
+        end = min(position + chunk_size, len(text))
+        dict_text[f"{position}-{end}"] = text[position  : end]
+        position +=  chunk_size-overlap
+
+    return dict_text, len(text)
 
 
+text = FileLoading(r"C:\Users\lonel\Desktop\PERSO\TRAIN\RAG\docs")
+print(chunks(text['Nouveau Document texte.txt'],512,50))
