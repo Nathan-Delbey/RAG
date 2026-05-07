@@ -13,15 +13,25 @@ def FileLoading(filepath):
 
 
 def chunks(text,chunk_size,overlap):
+    text_title = text[0]
+    text = text[1]
     position = 0
-    dict_text = {}
+    chunk_list = []
     while position  <len(text) :
         end = min(position + chunk_size, len(text))
-        dict_text[f"{position}-{end}"] = text[position  : end]
+        chunk_list.append({
+            "source": text_title,
+            "position": f"{position}-{end}",
+            "text": text[position : end]
+        })
         position +=  chunk_size-overlap
 
-    return dict_text, len(text)
+    return chunk_list
 
-
-text = FileLoading(r"C:\Users\lonel\Desktop\PERSO\TRAIN\RAG\docs")
-print(chunks(text['Nouveau Document texte.txt'],512,50))
+if __name__ == "__main__" : 
+    docs = FileLoading("docs")
+    data_base = []
+    for text in docs.items():
+        result = chunks(text,512,50)
+        data_base.extend(result)
+    print(result)
